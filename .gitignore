@@ -4,3 +4,4 @@ uploads
 
 app/webroot/upload
 app/tmp/*
+vendor/*
