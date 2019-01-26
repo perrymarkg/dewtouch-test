@@ -30,12 +30,14 @@ The table you start with</div>
 <th>Unit Price</th>
 </thead>
 
-<tbody>
+<tbody id="tbl_body">
 	<tr>
-	<td></td>
-	<td><textarea name="data[1][description]" class="m-wrap  description required" rows="2" ></textarea></td>
-	<td><input name="data[1][quantity]" class=""></td>
-	<td><input name="data[1][unit_price]"  class=""></td>
+	<td><a href="#" class="remove"><i class="icon-remove"></i></a></td>
+	<td class="input-area">
+		<textarea name="data[1][description]" class="input m-wrap description required" ></textarea>
+	</td>
+	<td class="input-area"><input name="data[1][quantity]" class="input"></td>
+	<td class="input-area"><input name="data[1][unit_price]"  class="input"></td>
 	
 </tr>
 
@@ -59,18 +61,90 @@ Your browser does not support the video tag.
 
 
 
-
+<style type="text/css">
+/* Perry */
+table,
+table * {
+	box-sizing:border-box;
+}
+.mini {
+	height:auto;
+}
+.d-none {
+  display:none;
+}
+.input {
+	width:100%;
+	border:none;
+	background:none;
+	height:30px;
+	margin:0;
+	outline:none;
+	padding:10px;
+}
+.input:focus {
+	border-bottom:1px solid #ddd;
+	background:#ffffff;
+}
+textarea.m-wrap {
+	height:auto;
+	resize:none;
+	overflow:hidden;
+}
+</style>
 <?php $this->start('script_own');?>
 <script>
 $(document).ready(function(){
 
-	$("#add_item_button").click(function(){
+	var $tbl_body = $('#tbl_body');
+
+	$tbl_body.on('keyup', 'textarea.input', function(){
+		$(this).css({height: $(this)[0].scrollHeight + 'px'});
+	});
+
+	$tbl_body.on('click', 'td.input-area', function(){
+		$(this).find('.input').focus();
+	});
+
+	$tbl_body.on('click', '.remove', function(e){
+		e.preventDefault();
+		$(this).parent().parent().remove();
+		adjustElementIndex();
+	});
 
 
-		alert("suppose to add a new row");
-		
+	$("#add_item_button").click(function(e){
+		e.preventDefault();
+		var length = $tbl_body.find('tr').length + 1;
+		var tpl = getRowTemplate(length);
+		$tbl_body.append(tpl);
+		adjustElementIndex();
+	});
 
+	function getRowTemplate(length)
+	{
+		var html = '<tr> \
+			<td><a href="#" class="remove"><i class="icon-remove"></i></a></td> \
+			<td class="input-area"><textarea name="data[0][description]" class="input m-wrap description required" style="height: 50px;"></textarea></td> \
+			<td class="input-area"><input name="data[0][quantity]" class="input"></td> \
+			<td class="input-area"><input name="data[0][unit_price]" class="input"></td>'
+		return html;
+	}
+
+	function adjustElementIndex()
+	{
+		$tbl_body.find('tr').each(function(index, el){
+			$(this).find('.input')
+				.each(function(i, i_el) {
+					var name = $(this).attr('name');
+					var e_index = index + 1;
+					name = name.replace(/\[\d+\]/g, '['+ e_index +']');
+					
+					$(this).attr('name', name);
+				});
+			
 		});
+	}
 
 	
 });
