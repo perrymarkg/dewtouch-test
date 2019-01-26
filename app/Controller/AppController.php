@@ -20,6 +20,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('Sanitize', 'Utility');
 
 /**
  * Application Controller
@@ -53,5 +54,16 @@ class AppController extends Controller {
 			$msg = __('Fail');
 		}
 		$this->setFlash($msg,array('class'=>'alert-error'));
+	}
+
+	/**
+	 * Sanitize data
+	 *
+	 * @param [mixed] $data
+	 * @return [mixed] $data
+	 */
+	public function sanitizeData($data)
+	{
+		return Sanitize::clean($data);
 	}
 }
