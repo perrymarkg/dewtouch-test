@@ -82,7 +82,7 @@ class RecordController extends AppController
 					$colIndex = $this->request->data['iSortCol_' . $x];
 					$colDir = $this->request->data['sSortDir_' . $x];
 					$colName = $this->getColNameByIndex($colIndex);
-					$order = [$colName => $colDir];
+					$order = array($colName => $colDir);
 				}
 			}
 
@@ -96,36 +96,36 @@ class RecordController extends AppController
 			$this->paginate['page'] = $data['page'];
 
 			if (!empty($data['search'])) {
-				$conditions = [
-					[
-						'OR' => [
+				$conditions = array(
+					array(
+						'OR' => array(
 							'RECORD.id LIKE' => "%{$data['search']}%",
 							'RECORD.name LIKE' => "%{$data['search']}%"
-						]
-					]
-				];
+						)
+					)
+				);
 				$this->paginate['conditions'] = $conditions;
 			}
 		}
 		
 		public function getPaginationData($data, $total, $records)
 		{
-			$pagination = [
+			$pagination = array(
 				"sEcho" => $data['sEcho'],
 				"iTotalRecords" => $total,
 				"iTotalDisplayRecords" => $total,
-				"aaData" => []
-			];
+				"aaData" => array()
+			);
 
 			if (!$total) {
 				return json_encode($pagination);
 			}
 
 			foreach ($records as $record) {
-				$pagination['aaData'][] = [
+				$pagination['aaData'][] = array(
 					$record['Record']['id'],
 					$record['Record']['name']
-				];
+				);
 			}
 
 			return json_encode($pagination);
