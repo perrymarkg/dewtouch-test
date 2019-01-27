@@ -19,6 +19,11 @@ class RecordController extends AppController
 			$this->set('title',__('List Record'));
 		}
 
+		/**
+		 * Check if ajax request and get the records
+		 *
+		 * @return void
+		 */
 		public function ajxGetRecords()
 		{
 			if (!$this->request->isAjax()) {
@@ -43,6 +48,11 @@ class RecordController extends AppController
 			
 		}
 
+		/**
+		 * Parse the request for datatables
+		 *
+		 * @return void
+		 */
 		private function parseRequestData()
 		{
 			$start = $this->request->data['iDisplayStart'];
@@ -59,19 +69,22 @@ class RecordController extends AppController
 			return $this->sanitize($data);
 		}
 
-		public function sanitize($data)
-		{
-			foreach ($data as $k => $d) {
-				$data[$k] = Sanitize::clean($d);
-			}
-			return $data;
-		}
-
+		/**
+		 * Check if column is name or id
+		 *
+		 * @param [int] $index
+		 * @return string
+		 */
 		private function getColNameByIndex($index)
 		{
 			return $index ? 'name' : 'id';
 		}
 
+		/**
+		 * Get the sort oder
+		 *
+		 * @return array
+		 */
 		private function getSortOrder()
 		{
 			$sortingCols = $this->request->data['iSortingCols'];
@@ -89,6 +102,12 @@ class RecordController extends AppController
 			return $order;
 		}
 
+		/**
+		 * Set the pagination
+		 *
+		 * @param [array] $data
+		 * @return void
+		 */
 		public function setPagination($data)
 		{
 			$this->paginate['order'] = $data['sort_order'];
@@ -108,6 +127,14 @@ class RecordController extends AppController
 			}
 		}
 		
+		/**
+		 * Build the pagination data to be used for datatables
+		 *
+		 * @param [array] $data
+		 * @param [int] $total
+		 * @param [array] $records
+		 * @return string
+		 */
 		public function getPaginationData($data, $total, $records)
 		{
 			$pagination = array(
