@@ -27,8 +27,9 @@ class MigrationImportController extends AppController
 		$this->doImport();
 
 		$members = $this->paginate('Transaction');
-		
-		$this->set(compact('members'));
+		$title = "Migration of data to multiple DB table";
+
+		$this->set(compact('members', 'title'));
     }
 
     /**
