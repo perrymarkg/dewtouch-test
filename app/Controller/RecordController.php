@@ -1,5 +1,4 @@
 <?php
-App::uses('Sanitize', 'Utility');
 
 class RecordController extends AppController
 {		
@@ -66,7 +65,7 @@ class RecordController extends AppController
 				'search' => $this->request->data['sSearch']
 			];
 			
-			return $this->sanitize($data);
+			return $this->sanitizeData($data);
 		}
 
 		/**
@@ -133,7 +132,7 @@ class RecordController extends AppController
 		 * @param [array] $data
 		 * @param [int] $total
 		 * @param [array] $records
-		 * @return string
+		 * @return stringZ
 		 */
 		public function getPaginationData($data, $total, $records)
 		{
