@@ -19,7 +19,7 @@ $(document).ready(function(){
 		"bProcessing": true,
         "bServerSide": true,
 		"sServerMethod": "POST",
-		"sAjaxSource": "/Record/ajxGetRecords"
+		"sAjaxSource": "Record/ajxGetRecords"
 	});
 })
 </script>
