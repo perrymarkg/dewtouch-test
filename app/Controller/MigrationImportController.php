@@ -102,6 +102,7 @@ class MigrationImportController extends AppController
 						'member_paytype' => $row['member_pay_type'],
 						'member_company' => !empty($row['member_company']) ? $row['member_company'] : NULL,
 						'date' => $date->format('Y-m-d'),
+						'month' => $date->format('m'),
 						'year' => $row['renewal_year'],
 						'ref_no' => $row['ref_no'],
 						'receipt_no' => $row['receipt_no'],
